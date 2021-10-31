@@ -22,6 +22,7 @@ async function run() {
         const blogsCollection = database.collection('blogs');
         const offersCollection = database.collection('offers');
         const orderCollection = database.collection('order');
+        const subscribeCollection = database.collection('subscribe');
 
         // get all services from database
         app.get('/services', async (req, res) => {
@@ -44,11 +45,32 @@ async function run() {
             res.send(blogs);
         });
 
+        // create new blog
+        app.post('/addBlog',async(req, res)=>{
+        	const data = req.body;
+        	const result = await blogsCollection.insertOne(data);
+        	res.json(result);
+        });
+
 		// get all offers
         app.get('/offers', async (req, res) => {
             const cursor = offersCollection.find({});
             const offers = await cursor.toArray();
             res.send(offers);
+        });
+
+         // create new blog
+        app.post('/addOffer',async(req, res)=>{
+        	const data = req.body;
+        	const result = await offersCollection.insertOne(data);
+        	res.json(result);
+        });
+
+          // create new subscribe
+        app.post('/subscribe',async(req, res)=>{
+        	const data = req.body;
+        	const result = await subscribeCollection.insertOne(data);
+        	res.json(result);
         });
 
         // get single service
